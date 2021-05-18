@@ -1,21 +1,16 @@
-from flask import Flask
+from flask import Flask, render_template, request
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return '''
-    <!DOCTYPE html>
-<html>
-<body>
-
-<h1>웹앱프로그래밍</h1>
-
-<p><a href="https://www.w3schools.com/">Visit W3Schools.com!</a></p>
-<p><a href="http://localhost:5000/hello">헬로 페이지</a></p>
-<p><a href="http://localhost:5000/naver">네이버 페이지</a></p>
-</body>
-</html>
-'''
+    return '안녕'
+    
+    '''
+    각주인데 뭐넣지
+    '''
+@app.route('/hell')
+def hell():
+    return render_template("main.html")
 
 @app.route('/hello')
 def hello():
@@ -23,7 +18,19 @@ def hello():
 
 @app.route('/naver')
 def naver():
-    return '귀하신 곳에 누추한 네이버가'
+    return render_template("naver.html")
+    
+@app.route('/gonaver', methods=['GET', 'POST'])
+def gonaver():
+    if request.method == 'GET':
+        return "데이터를 받아주는 페이지"
+    else:
+        #여기 POST로 들어오는 데이터를 받아보자
+
+        search = request.form['fname']
+        print("전달된값:", search)
+        return '당신이 검색한 키워드(post)<br>{}입니다.'
+    
 
 if __name__ == '__main__':
     app.run()
